@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Function.prototype: Call, apply y bind.</title>
+  </head>
+  <body>
+    <a href="/ejercicios/">Go Back</a>
+    <p><em>Abre la consola</em></p>
+
+    <ul>
+      <li><button class="call-to-action">Aprender</button></li>
+      <li><button class="call-to-action">Aprender Más</button></li>
+      <li><button class="call-to-action">¡Nunca parar de Aprender!</button></li>
+    </ul>
+
+    <script>
+      // Establece `this` usando `call`
+      function saludar() {
+        console.log(`Hola. Soy ${this.name} ${this.apellido}.`);
+      }
+
+      const david = {
+        name: "David",
+        apellido: "Delgado"
+      };
+
+      saludar.call(david);
+
+      // Establece `this` usando `call` y pasar argumentos a la función
+      function caminar(metros, direccion) {
+        console.log(`${this.name} camina ${metros} metros hacia ${direccion}.`);
+      }
+
+      caminar.call(david, 400, "norte");
+
+      // Establece `this` usando `apply` y pasar argumentos a la función
+      const valores = [800, "noreste"];
+      caminar.apply(david, valores);
+
+      /*
+        Call - comma
+        Apply - arreglo
+      */
+
+      // Establece `this` usando `bind`
+      const daniel = { name: "Daniel", apellido: "Sánchez" };
+      const danielSaluda = saludar.bind(daniel);
+      danielSaluda();
+
+      // const danielCamina = caminar.bind(daniel);
+      // danielCamina(1000, "este");
+
+      // también funciona:
+      // const danielCamina = caminar.bind(daniel, 2000, "sur");
+      //  danielCamina();
+
+      // usando currying:
+      const danielCamina = caminar.bind(daniel, 500);
+      danielCamina("oeste");
+
+      // Cuándo es útil usar uno de estos métodos
+      const buttons = document.getElementsByClassName("call-to-action");
+      // No funcionará porque buttons es un `Nodelist`
+      // buttons.forEach(button => {
+        // button.onclick = () => alert("Nunca pares de apredner!");
+      // });
+
+      // Para que funcione llamamos al forEach desde el prototype de Array y usamos call
+      Array.prototype.forEach.call(buttons, button => {
+        button.onclick = () => alert('Nunca pares de aprender!')
+      })
+    </script>
+  </body>
+</html>

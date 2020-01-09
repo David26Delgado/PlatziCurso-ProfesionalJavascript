@@ -12,7 +12,9 @@ class AutoPlay {
    * @return {void}
    */
   run(player) {
-    player.mute();
+    if (!player.muted) {
+      player.muted = true;
+    }
     player.play();
   }
 }

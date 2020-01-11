@@ -1,3 +1,7 @@
 node_modules
 
 assets/*.mp4
+
+.cache
+
+dist
